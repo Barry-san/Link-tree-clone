@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Register from './components/Register'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import About from './components/About'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './config/fconfig' 
@@ -31,6 +32,8 @@ function App() {
       <Routes>
         <Route path='/register' element={<Register/>}></Route>
         <Route path='/login' element={<Login/>}></Route>
+        <Route path='/about' element={<About/>}></Route>
+
         {User? 
         <Route path='/' element={<Dashboard/>}></Route>
          :
