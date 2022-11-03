@@ -18,7 +18,42 @@
     }
 }
 
+@keyframes startup {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 1;
+        transform: none;
+    }
+
+    60% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(-100000%);
+    }
+}
+
 .animate-loadup {
-    animation: loadup 1.5s ease;
+    animation: loadup 9s ease;
+    will-change: opacity, transform;
+}
+
+.animate-startup {
+    animation: startup 7s ease forwards;
+    will-change: opacity, transform;
+}
+
+.transit {
+    animation: loadup 650ms ease;
     will-change: opacity, transform;
 }
