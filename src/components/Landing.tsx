@@ -5,7 +5,7 @@ function Landing() {
   const navigate = useNavigate();
     return (
       <>
-      <div className="loader animate-startup absolute">
+      <div className="loader animate-startup absolute w-full ">
         <p className='text-red-400 text-8xl font-bold text-center pointer-events-none'>{`<a/>`}</p>
       </div>
       <div className="flex flex-col gap-8 items-center justify-center animate-loadup">

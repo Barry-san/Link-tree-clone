@@ -63,7 +63,7 @@ function Register() {
                       className="py-1 px-3 text-black"
                     />
                 </div>
-                <div className="flex gap-6 px-4 py-3 font-semibold">
+                <div className="flex gap-6 px-4 py-3 font-semibold justify-between">
                 <button 
                 type="submit"
                 className="py-2 bg-red-400 text-white flex-1 rounded-md"
