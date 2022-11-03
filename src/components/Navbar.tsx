@@ -18,8 +18,8 @@ function Navbar(props: UserProp) {
                 Log out
             </button>
             :
-            <Link to="/login" className="text-gray-300 hover:underline hover:text-red-400 transition-all"> 
-            Log in
+            <Link to="/about" className="text-gray-300 hover:underline hover:text-red-400 transition-all"> 
+            About
             </Link>
             }
         </div>
