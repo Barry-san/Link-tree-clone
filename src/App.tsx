@@ -11,6 +11,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/fconfig";
 import { useEffect, useState } from "react";
+import { useLogin } from "./hooks/useLogin";
 import Loading from "./components/Loading";
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
     console.log(User);
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        localStorage.setItem("userEmail", JSON.stringify(user.email));
+        localStorage.setItem("username", JSON.stringify(useLogin(user.email)));
         setUser("user");
       } else {
         console.log("No user logged in");

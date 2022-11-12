@@ -7,7 +7,7 @@ type UserProp = {
 function Navbar(props: UserProp) {
   const navigate = useNavigate();
   return (
-    <div className="flex items-center justify-between px-4 py-4  bg-slate-800 w-full top-0 sticky text-2xl z-50 ">
+    <div className="flex items-center justify-between px-4 py-4 w-full top-0 fixed text-2xl z-50 ">
       <Link to="/" className="text-red-400 text-center font-semibold">
         {"<a/>"}
       </Link>

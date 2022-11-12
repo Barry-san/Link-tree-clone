@@ -2,28 +2,32 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { auth } from "../config/fconfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+
 type formValues = {
   email: string;
   password: string;
 };
+
 function Login() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<formValues>();
-  const onSubmit = async (data: formValues) => {
-    await signInWithEmailAndPassword(auth, data.email, data.password).catch(
-      (err) => {
+  const onSubmit = (data: formValues) => {
+    setLoading(true);
+    signInWithEmailAndPassword(auth, data.email, data.password)
+      .then(() => navigate("/"))
+      .catch((err) => {
+        setLoading(false);
         console.log(err);
         alert("sign in with email and password failed.");
-      }
-    );
-    alert("done");
-    navigate("/");
+      });
   };
-  console.log(errors);
+
   return (
     <>
       <form
@@ -50,7 +54,6 @@ function Login() {
                 message: "password must be at least 6 characters",
               },
             })}
-            required
             id="password"
             className="py-1 px-3 text-black"
           />
@@ -59,12 +62,14 @@ function Login() {
           <button
             type="submit"
             className="py-2 bg-red-400 text-white flex-1 rounded-md"
+            disabled={loading}
           >
-            Login
+            {loading ? "loading..." : "Log in"}
           </button>
           <button
             className="py-3 bg-white text-red-400 flex-1 rounded-md"
             onClick={() => navigate("/register")}
+            disabled={loading}
           >
             Sign-up
           </button>

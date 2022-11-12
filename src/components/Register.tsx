@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../config/fconfig";
 import { useState } from "react";
 import Login from "./Login";
@@ -16,29 +16,42 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<formValues>();
+
   const onSubmit = async (data: formValues) => {
     setLoading(true);
-    await createUserWithEmailAndPassword(auth, data.email, data.password).catch(
-      (err) => {
+    const ref = doc(db, "usernames", data.username);
+    const snap = await getDoc(ref).catch((err) => {
+      setLoading(false);
+      alert("please check your internet connection and try again");
+      return;
+    });
+    if (snap && snap.exists()) {
+      alert("username is already taken. please try again.");
+      setLoading(false);
+    } else {
+      await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      ).catch((err) => {
         console.log(err);
         alert("create user with email and password failed.");
         setLoading(false);
-      }
-    );
+      });
 
-    await setDoc(doc(db, "users", `${data.email}`), {
-      username: data.username,
-    }).catch(() => {
-      alert("add user to database failed");
-      setLoading(false);
-    });
+      await setDoc(doc(db, "users", `${data.email}`), {
+        username: data.username,
+      }).catch(() => {
+        alert("add user to database failed");
+        setLoading(false);
+      });
 
-    await setDoc(doc(db, "usernames", `${data.username}`), {}).catch(() => {
-      alert("adding username to database failed");
-      setLoading(false);
-    });
-    setLoading(false);
-    navigate("/");
+      await setDoc(doc(db, "usernames", `${data.username}`), {}).catch(() => {
+        alert("adding username to database failed");
+        setLoading(false);
+        navigate("/");
+      });
+    }
   };
 
   return (
