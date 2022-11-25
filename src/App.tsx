@@ -10,18 +10,16 @@ import Addlinks from "./components/Addlinks";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/fconfig";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLogin } from "./hooks/useLogin";
-import Loading from "./components/Loading";
 
 function App() {
   const [User, setUser] = useState("");
   useEffect(() => {
-    console.log(User);
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        localStorage.setItem("username", JSON.stringify(useLogin(user.email)));
-        setUser("user");
+        setUser(await useLogin(user.email));
+        console.log(User);
       } else {
         console.log("No user logged in");
         setUser("");
@@ -41,7 +39,10 @@ function App() {
           {User ? (
             <Route path="/" element={<Dashboard />}>
               <Route path="mylinks"></Route>
-              <Route path="addlinks" element={<Addlinks />}></Route>
+              <Route
+                path="addlinks"
+                element={<Addlinks user={User}></Addlinks>}
+              ></Route>
             </Route>
           ) : (
             <Route path="/" element={<Landing />}></Route>

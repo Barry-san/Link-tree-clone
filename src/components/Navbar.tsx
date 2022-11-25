@@ -11,7 +11,7 @@ function Navbar(props: UserProp) {
       <Link to="/" className="text-red-400 text-center font-semibold">
         {"<a/>"}
       </Link>
-      {props.user === "user" ? (
+      {props ? (
         <button
           onClick={() => {
             signOut(auth);

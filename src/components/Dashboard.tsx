@@ -13,7 +13,7 @@ function Dashboard() {
         <div className="flex justify-between items-center">
           <Link
             to="mylinks"
-            className="border text-red-400 px-4 py-2 flex-1 text-lg text-center hover:text-white hover:underline"
+            className="border text-red-400 px-4 py-2 flex-1 text-lg text-center hover:text-white hover:underline active:text-white"
           >
             My links
           </Link>

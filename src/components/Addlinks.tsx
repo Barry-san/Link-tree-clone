@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { setDoc, doc } from "firebase/firestore";
+import { db } from "../config/fconfig";
 
 type FormValues = {
   LinkName: string;
@@ -6,15 +8,26 @@ type FormValues = {
   Link: string;
 };
 
-function Addlinks() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
-  const handler = (data: FormValues) => {
+type username = {
+  user: string;
+};
+
+function Addlinks(user: username) {
+  const { register, handleSubmit, reset } = useForm<FormValues>();
+
+  const handler = async (data: FormValues) => {
     console.log(data);
+
+    await setDoc(
+      doc(db, "usernames", user.user, "links", data.LinkName),
+      new Object({
+        message: data.Message,
+        link: data.Link,
+      })
+    );
+    reset();
   };
+
   return (
     <form
       className="flex flex-col p-6 gap-6 items-center text-red-400"
@@ -35,9 +48,8 @@ function Addlinks() {
       </div>
       <div className=" flex flex-col text-xl gap-2 ">
         <label htmlFor="Message">Message</label>
-        <input
+        <textarea
           className="text-black px-4"
-          type="text"
           id="Message"
           placeholder="e.g this is my twitter..."
           {...register("Message", {
@@ -64,7 +76,7 @@ function Addlinks() {
         />
       </div>
       <button
-        className="bg-white text-red-500 hover:text-white hover:bg-red-500 px-4 py-2 rounded-full"
+        className="bg-white text-red-500 hover:text-white hover:bg-red-400 px-4 py-2 rounded-full"
         type="submit"
       >
         Add Link
