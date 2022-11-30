@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
+import { useLinks } from "../hooks/useLinks";
 
 function Profiles() {
   const { username } = useParams();
+  useLinks("Barry");
   return (
     <div className="min-h-full flex flex-col items-center text-center gap-6">
       <p className="text-red-400 text-8xl font-bold text-center pointer-events-none">
