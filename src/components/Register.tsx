@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../config/fconfig";
 import { useState } from "react";
-import Login from "./Login";
+import { toast } from "react-hot-toast";
 
 type formValues = {
   email: string;
@@ -26,7 +26,9 @@ function Register() {
       return;
     });
     if (snap && snap.exists()) {
-      alert("username is already taken. please try again.");
+      toast.error("username is taken. Please try again", {
+        duration: 1000,
+      });
       setLoading(false);
     } else {
       await createUserWithEmailAndPassword(
@@ -46,7 +48,10 @@ function Register() {
         setLoading(false);
       });
 
-      await setDoc(doc(db, "usernames", `${data.username}`), {}).catch(() => {
+      await setDoc(
+        doc(db, "usernames", `${data.username.toLowerCase()}`),
+        {}
+      ).catch(() => {
         alert("adding username to database failed");
         setLoading(false);
         navigate("/");
