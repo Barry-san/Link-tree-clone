@@ -12,6 +12,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/fconfig";
 import React, { useEffect, useState } from "react";
 import { useLogin } from "./hooks/useLogin";
+import { Toaster } from "react-hot-toast";
+import Links from "./components/Links";
 
 function App() {
   const [User, setUser] = useState("");
@@ -19,7 +21,6 @@ function App() {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(await useLogin(user.email));
-        console.log(User);
       } else {
         console.log("No user logged in");
         setUser("");
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Toaster />
       <Navbar user={User}></Navbar>
       <div className="App bg-slate-800 min-h-screen min-w-full grid place-items-center">
         <Routes>
@@ -38,7 +40,7 @@ function App() {
           <Route path="/@:username" element={<Profiles />}></Route>
           {User ? (
             <Route path="/" element={<Dashboard />}>
-              <Route path="mylinks"></Route>
+              <Route path="mylinks" element={<Links />}></Route>
               <Route
                 path="addlinks"
                 element={<Addlinks user={User}></Addlinks>}
