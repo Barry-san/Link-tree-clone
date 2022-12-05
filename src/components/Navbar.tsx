@@ -4,14 +4,15 @@ import { auth } from "../config/fconfig";
 type UserProp = {
   user: string;
 };
-function Navbar(props: UserProp) {
+function Navbar(User: UserProp) {
+  console.log(User.user);
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between px-4 py-4 w-full top-0 fixed text-2xl z-50 ">
       <Link to="/" className="text-red-400 text-center font-semibold">
         {"<a/>"}
       </Link>
-      {props ? (
+      {User.user ? (
         <button
           onClick={() => {
             signOut(auth);
