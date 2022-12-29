@@ -48,14 +48,19 @@ function Register() {
         setLoading(false);
       });
 
-      await setDoc(
-        doc(db, "usernames", `${data.username.toLowerCase()}`),
+      setDoc(
+        doc(db, "usernames", `${data.username.toLowerCase()}`, "links", "lol"),
         {}
-      ).catch(() => {
-        alert("adding username to database failed");
-        setLoading(false);
-        navigate("/");
-      });
+      )
+        .then(() => {
+          setLoading(false);
+          navigate("/");
+        })
+        .catch(() => {
+          alert("adding username to database failed");
+          setLoading(false);
+          navigate("/");
+        });
     }
   };
 
@@ -79,6 +84,7 @@ function Register() {
           <input
             type="text"
             {...register("username")}
+            // pattern={"([A-Z][a-z][0-9]_)w+"}
             required
             className="py-1 px-3 text-black"
           />

@@ -12,7 +12,7 @@ function Profiles() {
         {"<a>"}
       </p>
       <p className="font-semibold text-gray-300 text-2xl md:text-3xl underline pointer-events-none">{`${username}'s links`}</p>
-      {item.loading && <Loading></Loading>}
+      {item.loading && <Loading />}
     </div>
   );
 }

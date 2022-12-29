@@ -22,7 +22,6 @@ function App() {
       if (user) {
         setUser(await useLogin(user.email));
       } else {
-        console.log("No user logged in");
         setUser("");
       }
     });
