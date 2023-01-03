@@ -26,7 +26,7 @@ function About() {
           in one page, giving you just one link to for all your links. You just
           share the website followed by a slash and @ and your username. e.g{" "}
           <span className="text-red-400 pointer-events-none">
-            anchor.lyart/@yourusername
+            anchor.lyart.vercel.app/@yourusername
           </span>
           .
           <br />
